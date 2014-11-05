@@ -31,6 +31,6 @@ do
     x="$x $i -mix $len -mixer luma -mixer mix:-1"
 done
 
-x="melt$x -consumer avformat:${outputdir}/fade_$(date +%s).$ext b=220000k acodec=mp2 ab=128k"
+x="melt$x -consumer avformat:${outputdir}/fade_$(date +%s).$ext acodec=mp2 ab=128k"
 
 eval $x

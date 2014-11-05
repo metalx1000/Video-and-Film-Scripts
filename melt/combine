@@ -1,0 +1,32 @@
+#!/bin/bash
+#Script by Kris Occhipinti
+#http://filmsbykris.com
+#GPLv3 - http://www.gnu.org/licenses/gpl-3.0.txt
+#Source code https://github.com/metalx1000/Video-and-Film-Scripts
+#This Script is designed to combine all video clips in a folder
+
+if [ $# -lt 2 ]
+then
+    echo "Useage: $0 <file type> <output dir>"
+    echo "Example: $0 MOV /tmp/output"
+    exit 0
+fi
+
+
+ext=$1
+outputdir="$2"
+outputfile="${outputdir}/combine_$(date +%s).$ext"
+
+echo "creating \"$outputdir\""
+mkdir -p "$outputdir" || e="error"
+
+if [ "$e" = "error" ]
+then
+    echo "Can't create $outputdir"
+    exit 1
+fi
+
+melt * -consumer avformat:$outputfile acodec=mp2 ab=128k
+
+echo "File Created $outputfile"
+mplayer "$outputfile"

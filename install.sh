@@ -9,14 +9,14 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-apt-get install youtube-dl melt
+apt-get install youtube-dl melt mplayer
 
 dir="/usr/local/bin"
 cd $dir
 
 #get MELT scripts
 base_url="https://raw.githubusercontent.com/metalx1000/Video-and-Film-Scripts/master/melt/"
-array=( trim fade get_film )
+array=( trim fade get_film combine)
 for i in "${array[@]}"
 do
     echo "Downloading $i"
