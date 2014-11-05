@@ -1,0 +1,54 @@
+#!/bin/bash
+#Script by Kris Occhipinti
+#http://filmsbykris.com
+#GPLv3 - http://www.gnu.org/licenses/gpl-3.0.txt
+#Source code https://github.com/metalx1000/Video-and-Film-Scripts
+
+echo "This script will download some film effects and overlays..."
+sleep 2
+
+if [ -f /usr/bin/youtube-dl ]
+then
+    echo "Youtube-dl is installed."
+else
+    echo "Youtube-dl is not installed."
+    echo "Attempting to install Youtube-dl with package manager."
+    sudo aptitude install youtube-dl||error="true"
+    if [ "$error" = "true" ]
+    then
+        echo "unable to install youtube-dl"
+        echo "Please visit: https://github.com/rg3/youtube-dl"
+        exit 1
+    fi
+fi
+
+mkdir -p effects/tmp ||error="true"
+if [ "$error" = "true" ]
+then
+    exit 1
+fi
+
+cd effects/tmp
+youtube-dl "https://www.youtube.com/watch?v=Y0QOpCwKyGI"
+youtube-dl "https://www.youtube.com/watch?v=arYNrpNmMR8"
+youtube-dl "https://www.youtube.com/watch?v=MDhrby7jFms"
+youtube-dl "https://www.youtube.com/watch?v=Y9KXPkhZSy0"
+youtube-dl "https://www.youtube.com/watch?v=colZpfX6cwk"
+youtube-dl "https://www.youtube.com/watch?v=Jr3dqlgtrmg"
+
+for i in *
+do
+    melt "$i" in=90 -consumer avformat:"../$i" acodec=mp2 ab=128k
+done
+
+cd ../
+rm -fr tmp
+
+
+echo "Layer Effects by https://gumroad.com/snowmandigital"
+
+echo "#Script by Kris Occhipinti"
+echo "#http://filmsbykris.com"
+echo "#GPLv3 - http://www.gnu.org/licenses/gpl-3.0.txt"
+echo "#Source code https://github.com/metalx1000/Video-and-Film-Scripts"
+

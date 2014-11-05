@@ -1,0 +1,32 @@
+#!/bin/bash
+#Script by Kris Occhipinti
+#http://filmsbykris.com
+#GPLv3 - http://www.gnu.org/licenses/gpl-3.0.txt
+#Source code https://github.com/metalx1000/Video-and-Film-Scripts
+#This Script is designed to trim all video clips in a folder
+
+if [ $# -lt 4 ]
+then
+    echo "Useage: $0 <file type> <start frame> <number of frames> <output dir>"
+    echo "Example: $0 MOV 30 120 /tmp/output"
+    exit 0
+fi
+
+ext="$1"
+in="$2"
+out="$3"
+outputdir="$4"
+
+echo "creating \"$outputdir\""
+mkdir -p "$outputdir" || e="error"
+
+if [ "$e" = "error" ]
+then
+    echo "Can't create $outputdir"
+    exit 1
+fi
+
+for i in *.$ext
+do
+    melt $i in=$in out=$out -consumer avformat:${outputdir}/$i acodec=mp2 ab=128k
+done
