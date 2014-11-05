@@ -16,7 +16,7 @@ cd $dir
 
 #get MELT scripts
 base_url="https://raw.githubusercontent.com/metalx1000/Video-and-Film-Scripts/master/melt/"
-array=( trim fade get_film combine)
+array=( trim fade get_film combine trim_combine)
 for i in "${array[@]}"
 do
     echo "Downloading $i"
