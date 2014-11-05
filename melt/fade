@@ -5,7 +5,7 @@
 #Source code https://github.com/metalx1000/Video-and-Film-Scripts
 #This Script is designed to fade all video clips in a folder
 
-if [ $# -lt 2 ]
+if [ $# -lt 3 ]
 then
     echo "Useage: $0 <file type> <fade length in frames> <output dir>"
     echo "Example: $0 MOV 30 /tmp/output"
@@ -15,6 +15,7 @@ fi
 ext=$1
 len=$2 #fade length in frames
 outputdir="$3"
+outputfile="${outputdir}/fade_$(date +%s).$ext"
 
 echo "creating \"$outputdir\""
 mkdir -p "$outputdir" || e="error"
@@ -31,6 +32,8 @@ do
     x="$x $i -mix $len -mixer luma -mixer mix:-1"
 done
 
-x="melt$x -consumer avformat:${outputdir}/fade_$(date +%s).$ext acodec=mp2 ab=128k"
+x="melt$x -consumer avformat:$outputfile acodec=mp2 ab=128k"
 
 eval $x
+
+mplayer $outputfile
