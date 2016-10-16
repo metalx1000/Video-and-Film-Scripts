@@ -26,7 +26,7 @@ then
     exit 1
 fi
 
-melt * -consumer avformat:$outputfile acodec=mp2 ab=128k
+melt *.$ext -consumer avformat:$outputfile acodec=mp2 ab=128k
 
 echo "File Created $outputfile"
 mplayer "$outputfile"
